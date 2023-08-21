@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { BoardState, cols, rows } from "../gobang";
+  import { BoardState, cols, rows } from "../gobang";
 
-defineProps<{
-  state: BoardState;
-  x: number;
-  y: number;
-  selected?: boolean;
-  marked?: boolean;
-}>();
+  defineProps<{
+    state: BoardState;
+    x: number;
+    y: number;
+    selected?: boolean;
+    marked?: boolean;
+  }>();
 </script>
 
 <template>
@@ -41,8 +41,16 @@ defineProps<{
       ]"
     ></div>
     <div
-      v-if="(x + 1) % 4 === 0 && (y + 1) % 4 === 0 && ((x + y + 2) / 4) % 2 === 0"
-      :class="['position:absolute', 'background:black', 'width:25%', 'height:25%', 'r:100%']"
+      v-if="
+        (x + 1) % 4 === 0 && (y + 1) % 4 === 0 && ((x + y + 2) / 4) % 2 === 0
+      "
+      :class="[
+        'position:absolute',
+        'background:black',
+        'width:25%',
+        'height:25%',
+        'r:100%',
+      ]"
     ></div>
 
     <div

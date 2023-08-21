@@ -1,86 +1,106 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-import Board from "./Board.vue";
-import { BoardState, check_winner, cols, rows } from "../gobang";
+  import { reactive, ref } from "vue";
+  import Board from "./Board.vue";
+  import { BoardState, check_winner, cols, rows } from "../gobang";
 
-interface Payload {
+  interface Payload {
     board: BoardState[];
     turn: number;
     current: BoardState;
     winner: {
-        color: BoardState;
-        stones: number[];
+      color: BoardState;
+      stones: number[];
     };
-}
+  }
 
-const { disable_win, disable_click } = defineProps<{
+  const { disable_win, disable_click } = defineProps<{
     ui?: { selected: boolean; marked: boolean }[];
     disable_hover?: boolean;
     disable_win?: boolean;
     disable_click?: boolean;
-}>();
+  }>();
 
-const emit = defineEmits<{
-    (event: "init", payload: Payload & { ui: { selected: boolean; marked: boolean }[] }): void;
-    (event: "set", payload: Payload & { stone: { x: number; y: number; color: BoardState } }): void;
+  const emit = defineEmits<{
+    (
+      event: "init",
+      payload: Payload & { ui: { selected: boolean; marked: boolean }[] }
+    ): void;
+    (
+      event: "set",
+      payload: Payload & { stone: { x: number; y: number; color: BoardState } }
+    ): void;
     (event: "over", payload: Payload): void;
-}>();
+  }>();
 
-const board = reactive(Array.from({ length: cols * rows }, () => BoardState.Empty));
-const ui = reactive(
-    Array.from({ length: cols * rows }, () => ({ selected: false, marked: false })),
-);
+  const board = reactive(
+    Array.from({ length: cols * rows }, () => BoardState.Empty)
+  );
+  const ui = reactive(
+    Array.from({ length: cols * rows }, () => ({
+      selected: false,
+      marked: false,
+    }))
+  );
 
-const turn = ref(0);
-const current = ref(BoardState.Black);
-const winner = reactive({ color: BoardState.Empty, stones: <number[]>[] });
+  const turn = ref(0);
+  const current = ref(BoardState.Black);
+  const winner = reactive({ color: BoardState.Empty, stones: <number[]>[] });
 
-function set(x: number, y: number, state: BoardState, swap = true) {
+  function set(x: number, y: number, state: BoardState, swap = true) {
     if (winner.color !== BoardState.Empty) {
-        emit("over", { board, turn: turn.value, current: current.value, winner });
-        return;
+      emit("over", { board, turn: turn.value, current: current.value, winner });
+      return;
     }
 
     if (disable_click) {
-        return;
+      return;
     }
 
     if (board[y * cols + x] === BoardState.Empty) {
-        board[y * cols + x] = state;
-        turn.value++;
-        if (swap) {
-            current.value =
-                current.value === BoardState.Black ? BoardState.White : BoardState.Black;
+      board[y * cols + x] = state;
+      turn.value++;
+      if (swap) {
+        current.value =
+          current.value === BoardState.Black
+            ? BoardState.White
+            : BoardState.Black;
+      }
+
+      const checked = check_winner(board);
+      [winner.color, winner.stones] = [checked.winner, checked.stones];
+
+      emit("set", {
+        board,
+        turn: turn.value,
+        current: current.value,
+        winner,
+        stone: { x, y, color: state },
+      });
+
+      if (winner.color !== BoardState.Empty) {
+        for (const stone of winner.stones) {
+          ui[stone].marked = !disable_win;
         }
 
-        const checked = check_winner(board);
-        [winner.color, winner.stones] = [checked.winner, checked.stones];
-
-        emit("set", {
-            board,
-            turn: turn.value,
-            current: current.value,
-            winner,
-            stone: { x, y, color: state },
+        emit("over", {
+          board,
+          turn: turn.value,
+          current: current.value,
+          winner,
         });
-
-        if (winner.color !== BoardState.Empty) {
-            for (const stone of winner.stones) {
-                ui[stone].marked = !disable_win;
-            }
-
-            emit("over", { board, turn: turn.value, current: current.value, winner });
-        }
+      }
     }
-}
+  }
 
-    emit("init", { board, turn: turn.value, current: current.value, winner, ui });
+  emit("init", { board, turn: turn.value, current: current.value, winner, ui });
 
-defineExpose({ ui, set });
+  defineExpose({ ui, set });
 </script>
 
 <template>
-  <div :class="`width:100% height:100% d:grid grid-cols:${cols} background:gold-76`">
+  <div
+    :class="`width:100% height:100% d:grid grid-cols:${cols} background:gold-76`"
+  >
     <Board
       v-for="(state, i) in board"
       :key="i"
@@ -93,7 +113,11 @@ defineExpose({ ui, set });
       @mouseenter="disable_hover || (ui[i].selected = true)"
       @mouseleave="disable_hover || (ui[i].selected = false)"
       :class="[
-        `cursor:${!disable_click && state === BoardState.Empty ? 'pointer' : 'not-allowed'}`,
+        `cursor:${
+          !disable_click && state === BoardState.Empty
+            ? 'pointer'
+            : 'not-allowed'
+        }`,
       ]"
     />
   </div>
