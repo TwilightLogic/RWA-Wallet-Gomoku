@@ -57,9 +57,9 @@
       class="flex:1 height:calc(100%-100vmin) height:calc(100vmin-3rem)@md d:flex justify-content:center align-items:center"
     >
       <div
-        class="d:flex flex-direction:col width:90% height:90% p:12 border:1px;solid;blue-60 r:12"
+        class="d:flex flex-direction:col width:90% height:90% p:12 border:1px;solid;sky-60 r:12"
       >
-        <h2 class="f:blue-60">Your Steps</h2>
+        <h2 class="f:sky-60">🌈 Your Steps:</h2>
         <div
           class="mt:16 flex-1 overflow-y:auto d:flex flex-direction:col-reverse"
           ref="logs_elm"
@@ -67,7 +67,7 @@
           <div
             v-for="(log, i) in logs"
             :key="i"
-            class="my:8 font-family:monospace color:gray-25"
+            class="my:8 font-family:monospace color:#fff font-size:1rem"
             @mouseenter="
               game && (game.ui[log.y * cols + log.x].selected = true)
             "
@@ -76,7 +76,7 @@
             "
           >
             {{ i + 1 }}.
-            {{ log.color === BoardState.Black ? "●" : "○" }}
+            {{ log.color === BoardState.Black ? "○" : "●" }}
             <span class="font:bold">{{ log.x + 1 }},{{ log.y + 1 }}</span>
           </div>
         </div>
@@ -98,6 +98,11 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #fafafa;
+    background: linear-gradient(
+      to right,
+      rgba(10, 46, 124, 1),
+      rgba(17, 24, 39, 1)
+    );
+    /* background: rgba(17, 24, 39, 1); */
   }
 </style>

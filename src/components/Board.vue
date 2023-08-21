@@ -53,6 +53,7 @@
       ]"
     ></div>
 
+    <!-- 这里就是标记获胜的棋子 -->
     <div
       v-if="state === BoardState.Black || state === BoardState.White"
       :class="[

@@ -90,11 +90,31 @@
         });
       }
     }
+
+    if (winner.color !== BoardState.Empty) {
+      // 游戏结束时调用 getWinningPositions 函数，并将结果输出到控制台
+      const winningPositions = getWinningPositions();
+      console.log("Winning Positions:", winningPositions);
+    }
   }
 
   emit("init", { board, turn: turn.value, current: current.value, winner, ui });
 
   defineExpose({ ui, set });
+
+  function getWinningPositions(): [number, number][] {
+    const positions: [number, number][] = [];
+
+    if (winner.color !== BoardState.Empty) {
+      for (const stoneIndex of winner.stones) {
+        const x = stoneIndex % cols;
+        const y = Math.floor(stoneIndex / cols);
+        positions.push([x + 1, y + 1]);
+      }
+    }
+
+    return positions;
+  }
 </script>
 
 <template>
