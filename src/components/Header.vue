@@ -24,13 +24,35 @@
 
       if (accounts.length !== 0) {
         const account = accounts[0];
+        // console.log(addressFormat.value);
         accountAddress.value = account;
         addressFormat.value = formatString(accountAddress.value);
-        console.log(addressFormat.value);
         console.log(`found account with address`, accountAddress.value);
       } else {
         console.log(`no authorized account found`);
       }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const connectWallet = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (!ethereum) {
+        alert(`please install zCloak wallet`);
+        return;
+      }
+
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+        params: [],
+      });
+      console.log(accounts[0]);
+
+      accountAddress.value = accounts[0];
+      addressFormat.value = formatString(accountAddress.value);
     } catch (err) {
       console.error(err);
     }
@@ -52,7 +74,7 @@
   >
     <div class="abs top:25% left:3%">
       <button
-        class="f:gray-80 font:medium f:18 f:gray-90:hover"
+        class="f:white font:medium f:18 f:gray-80:hover"
         @click="copy(accountAddress)"
       >
         {{ addressFormat }}
@@ -64,6 +86,7 @@
     <div class="abs top:0% right:3%">
       <button
         class="f:white bg:blue-50 bg:blue-60:hover f:16 rounded p:15 font:semibold ~duration:100ms:hover"
+        @click="connectWallet()"
       >
         Connect Wallet
       </button>
