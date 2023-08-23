@@ -25,7 +25,7 @@
 </script>
 
 <template>
-  <Header />
+  <Header></Header>
   <div class="height:calc(100%-3rem) width:100% d:flex flex:col flex:row@md">
     <div
       class="width:100vmin height:100vmin width:calc(100vmin-3rem)@md height:calc(100vmin-3rem)@md d:flex justify-content:center align-items:center"
@@ -56,10 +56,10 @@
     <div
       class="flex:1 height:calc(100%-100vmin) height:calc(100vmin-3rem)@md d:flex justify-content:center align-items:center"
     >
-      <div
-        class="d:flex flex-direction:col width:90% height:90% p:12 border:1px;solid;sky-60 r:12"
-      >
-        <h2 class="f:sky-60">🌈 Your Steps:</h2>
+      <div class="d:flex flex-direction:col width:90% height:90% p:12 r:12">
+        <div class="d:flex ai:center jc:space-between">
+          <h2 class="f:white">🌈 Your Steps:</h2>
+        </div>
         <div
           class="mt:16 flex-1 overflow-y:auto d:flex flex-direction:col-reverse"
           ref="logs_elm"

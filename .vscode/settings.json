@@ -21,12 +21,5 @@
   "files.autoSave": "onFocusChange",
   "editor.formatOnSave": true,
   "prettier.trailingComma": "all",
-  "files.exclude": {
-    "node_modules/": true,
-    "dist/": true,
-    "coverage/": true,
-    "generated/": true,
-    ".expo/": true
-  },
   "editor.tabSize": 2
 }
