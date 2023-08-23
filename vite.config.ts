@@ -1,7 +1,10 @@
 import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
 import vue from "@vitejs/plugin-vue";
 import rollupNodePolyFill from "rollup-plugin-node-polyfills";
+import AutoImport from "unplugin-auto-import/vite";
 import Icons from "unplugin-icons/vite";
+import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
+import Components from "unplugin-vue-components/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -42,7 +45,26 @@ export default defineConfig({
       domain: "rollup-plugin-node-polyfills/polyfills/domain",
     },
   },
-  plugins: [vue(), Icons({ compiler: "vue3" })],
+  plugins: [
+    vue(),
+    Icons({ compiler: "vue3" }),
+    AutoImport({
+      imports: [
+        "vue",
+        {
+          "naive-ui": [
+            "useDialog",
+            "useMessage",
+            "useNotification",
+            "useLoadingBar",
+          ],
+        },
+      ],
+    }),
+    Components({
+      resolvers: [NaiveUiResolver()],
+    }),
+  ],
   base: "/",
   optimizeDeps: {
     esbuildOptions: {

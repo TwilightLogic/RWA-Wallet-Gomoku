@@ -1,9 +1,11 @@
 <script setup lang="ts">
-  import { reactive, ref } from "vue";
-  import Header from "./components/Header.vue";
+  import CreateRoom from "./components/CreateRoom.vue";
   import Game from "./components/Game.vue";
+  import Header from "./components/Header.vue";
+  import RoomList from "./components/RoomList.vue";
   import { BoardState, cols } from "./gobang";
   import { ws } from "./ws";
+  import { reactive, ref } from "vue";
 
   const logs = reactive<{ x: number; y: number; color: BoardState }[]>([]);
   const logs_elm = ref<HTMLDivElement | null>();
@@ -26,7 +28,37 @@
 
 <template>
   <Header></Header>
-  <div class="height:calc(100%-3rem) width:100% d:flex flex:col flex:row@md">
+
+  <div class="mt:48px d:flex align-items:center justify-content:space-between">
+    <!-- left -->
+    <div class="w:60% mx:24px rounded">
+      <n-loading-bar-provider>
+        <n-message-provider>
+          <n-notification-provider>
+            <n-dialog-provider>
+              <RoomList></RoomList>
+            </n-dialog-provider>
+          </n-notification-provider>
+        </n-message-provider>
+      </n-loading-bar-provider>
+    </div>
+
+    <!-- right -->
+    <div class="w:40% mx:24px rounded">
+      <n-loading-bar-provider>
+        <n-message-provider>
+          <n-notification-provider>
+            <n-dialog-provider>
+              <CreateRoom></CreateRoom>
+            </n-dialog-provider>
+          </n-notification-provider>
+        </n-message-provider>
+      </n-loading-bar-provider>
+    </div>
+  </div>
+
+  <div class="height:calc(100%-3rem) width:100% hidden flex:col flex:row@md">
+    <!-- <div class="height:calc(100%-3rem) width:100% d:flex flex:col flex:row@md"> -->
     <div
       class="width:100vmin height:100vmin width:calc(100vmin-3rem)@md height:calc(100vmin-3rem)@md d:flex justify-content:center align-items:center"
     >
