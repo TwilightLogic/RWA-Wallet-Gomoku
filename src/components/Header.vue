@@ -74,7 +74,7 @@
   >
     <div class="abs top:25% left:3%">
       <button
-        class="f:white font:medium f:18 f:gray-80:hover"
+        class="f:white font:medium f:18 f:gray-80:hover ~duration:100ms2"
         @click="copy(accountAddress)"
       >
         {{ addressFormat }}
