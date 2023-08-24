@@ -31,7 +31,7 @@
 
   <div class="mt:48px d:flex align-items:center justify-content:space-between">
     <!-- left -->
-    <div class="w:60% mx:24px rounded">
+    <div class="w:62% ml:48px rounded">
       <n-loading-bar-provider>
         <n-message-provider>
           <n-notification-provider>
@@ -44,17 +44,7 @@
     </div>
 
     <!-- right -->
-    <div class="w:40% mx:24px rounded">
-      <n-loading-bar-provider>
-        <n-message-provider>
-          <n-notification-provider>
-            <n-dialog-provider>
-              <CreateRoom></CreateRoom>
-            </n-dialog-provider>
-          </n-notification-provider>
-        </n-message-provider>
-      </n-loading-bar-provider>
-    </div>
+    <CreateRoom class="mr:48px"></CreateRoom>
   </div>
 
   <div class="height:calc(100%-3rem) width:100% hidden flex:col flex:row@md">
