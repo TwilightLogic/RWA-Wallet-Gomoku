@@ -29,7 +29,7 @@
 <template>
   <Header></Header>
 
-  <div class="mt:48px d:flex align-items:center justify-content:space-between">
+  <div class="mt:64px d:flex align-items:center justify-content:space-between">
     <!-- left -->
     <div class="w:62% ml:48px rounded">
       <n-loading-bar-provider>
