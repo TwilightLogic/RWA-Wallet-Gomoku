@@ -57,12 +57,12 @@
           ref="game"
           :key="key"
           @set="
-            ({ stone }) => {
+            ({ stone }: any) => {
               log(stone);
             }
           "
           @over="
-            ({ winner }) => {
+            ({ winner }: any) => {
               if (ws === null) {
                 say(
                   `Game over. ${

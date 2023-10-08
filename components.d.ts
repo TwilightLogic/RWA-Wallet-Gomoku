@@ -8,13 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Board: typeof import('./src/components/Board.vue')['default']
-    Content: typeof import('./src/components/Content.vue')['default']
     CreateRoom: typeof import('./src/components/CreateRoom.vue')['default']
     Game: typeof import('./src/components/Game.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
-    Landing: typeof import('./src/components/Landing.vue')['default']
-    LandingIndex: typeof import('./src/components/LandingIndex.vue')['default']
-    NCard: typeof import('naive-ui')['NCard']
     NDataTable: typeof import('naive-ui')['NDataTable']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
